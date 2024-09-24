@@ -38,7 +38,7 @@ export default function Header({ setSidebarOpen, user }: HeaderProps) {
             <div className="relative h-10 w-10 rounded-full cursor-pointer">
               <Image
                 className="rounded-full object-cover"
-                src={user?.image || '/user.png'}
+                src={user?.image || '/user.jpg'}
                 alt="User"
                 width={64}
                 height={64}
