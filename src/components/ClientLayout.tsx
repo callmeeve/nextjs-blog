@@ -8,7 +8,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const showNavbar = !['/login', '/register'].includes(pathname) && !pathname.startsWith('/admin');
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-900">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
       {showNavbar && <Navbar />}
       <main className="flex-1">
         {children}
