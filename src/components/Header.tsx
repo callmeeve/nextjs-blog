@@ -7,6 +7,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { ThemeToggle } from './ThemeToggle';
+import { useThemeContext } from './ThemeProvider'; // Step 1: Import useThemeContext
 
 interface HeaderProps {
   setSidebarOpen: (open: boolean) => void;
@@ -17,6 +18,8 @@ interface HeaderProps {
 }
 
 export default function Header({ setSidebarOpen, user }: HeaderProps) {
+  const { resetTheme } = useThemeContext();
+
   return (
     <header className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700">
       <div className="flex items-center">
@@ -50,7 +53,12 @@ export default function Header({ setSidebarOpen, user }: HeaderProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => signOut({ redirect: false })}>
+            <DropdownMenuItem
+              onClick={() => {
+                resetTheme(); // Step 3: Call resetTheme before signOut
+                signOut({ redirect: false });
+              }}
+            >
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>

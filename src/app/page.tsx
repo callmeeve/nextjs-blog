@@ -21,7 +21,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="bg-gray-50 dark:bg-zinc-900 py-12 lg:py-24">
+      <div className="py-12 lg:py-24">
         <div className="container grid max-w-6xl gap-10 px-6 md:gap-16 lg:grid-cols-2 xl:gap-20">
           <div className="flex flex-col justify-between space-y-4">
             <div className="space-y-2">

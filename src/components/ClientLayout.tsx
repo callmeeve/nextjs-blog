@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Navbar from "@/components/Navbar";
-import { usePathname } from "next/navigation";
+import Navbar from '@/components/Navbar';
+import { usePathname } from 'next/navigation';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const showNavbar = pathname !== "/login" && pathname !== "/register";
+  const showNavbar = !['/login', '/register'].includes(pathname) && !pathname.startsWith('/admin');
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-900">

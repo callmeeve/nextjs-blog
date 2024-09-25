@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
-import { ThemeProvider } from '@/components/ThemeProvider';
 
 export default function AdminLayout({
   children,
@@ -30,20 +29,18 @@ export default function AdminLayout({
       </div>
     );
   }
-  
+
   const user = session?.user && session.user.name ? { name: session.user.name, image: session.user.image || undefined } : null;
 
   return (
-    <ThemeProvider>
-      <div className="flex h-screen bg-white dark:bg-zinc-900">
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header setSidebarOpen={setSidebarOpen} user={user} />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white dark:bg-zinc-900">
-            {children}
-          </main>
-        </div>
+    <div className="flex h-screen bg-white dark:bg-zinc-900">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header setSidebarOpen={setSidebarOpen} user={user} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white dark:bg-zinc-900">
+          {children}
+        </main>
       </div>
-    </ThemeProvider>
+    </div>
   );
 }
