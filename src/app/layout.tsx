@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NextAuthProvider } from "./providers";
-import Navbar from "@/components/Navbar";
+import ClientLayout from "@/components/ClientLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,12 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-900">
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-          </div>
+          <ClientLayout>{children}</ClientLayout>
         </NextAuthProvider>
       </body>
     </html>

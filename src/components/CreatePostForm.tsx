@@ -9,6 +9,7 @@ import { toast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
 const postSchema = z.object({
+    image: z.instanceof(File).optional(),
     title: z.string().min(1, "Title is required"),
     content: z.string().min(1, "Content is required"),
 });
@@ -18,6 +19,7 @@ interface CreatePostFormProps {
 }
 
 export function CreatePostForm({ fetchPosts }: CreatePostFormProps) {
+    const [image, setImage] = useState<File | null>(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -25,7 +27,7 @@ export function CreatePostForm({ fetchPosts }: CreatePostFormProps) {
         e.preventDefault();
 
         // Validate form data using zod
-        const result = postSchema.safeParse({ title, content });
+        const result = postSchema.safeParse({ image, title, content });
         if (!result.success) {
             const errors = result.error.errors.map(err => err.message).join(", ");
             toast({
@@ -37,16 +39,22 @@ export function CreatePostForm({ fetchPosts }: CreatePostFormProps) {
         }
 
         try {
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('content', content);
+            if (image) {
+                formData.append('image', image);
+            }
+
             const response = await fetch('/api/posts', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title, content }),
+                body: formData,
             });
+
             if (response.ok) {
                 setTitle('');
                 setContent('');
+                setImage(null);
                 toast({
                     title: "Success",
                     description: "Post created successfully",
@@ -94,6 +102,17 @@ export function CreatePostForm({ fetchPosts }: CreatePostFormProps) {
                     required
                     className="bg-white dark:bg-zinc-800 text-zinc-900 dark:text-gray-200 rounded-[0.3rem]"
                     rows={5}
+                />
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Image
+                </Label>
+                <Input
+                    type="file"
+                    id="image"
+                    onChange={(e) => setImage(e.target.files?.[0] || null)}
+                    className="bg-white dark:bg-zinc-800 text-zinc-900 dark:text-gray-200 rounded-[0.3rem]"
                 />
             </div>
             <div className="flex justify-end">
